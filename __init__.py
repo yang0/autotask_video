@@ -1,4 +1,4 @@
-from .example import *
+from .cutVideo import *
 
 VERSION = "1.0.0"
 GIT_URL = "https://github.com/yang0/autotask_video.git"
