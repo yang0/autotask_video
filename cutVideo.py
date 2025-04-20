@@ -61,15 +61,10 @@ class VideoSlicingNode(Node):
     }
 
     OUTPUTS = {
-        "output_directory": {
-            "label": "Output Directory",
-            "description": "Directory containing the sliced video scenes",
-            "type": "STRING"
-        },
-        "scene_count": {
-            "label": "Scene Count",
-            "description": "Number of scenes detected and extracted",
-            "type": "INT"
+        "video_paths": {
+            "label": "Video Paths",
+            "description": "Array of paths to the sliced video files",
+            "type": "List"
         }
     }
 
@@ -139,12 +134,18 @@ class VideoSlicingNode(Node):
             # Move scenes to subdirectories
             self._move_scenes_to_subdirectories(video_output_dir)
             
+            # Get all video file paths
+            video_paths = []
+            for root, dirs, files in os.walk(video_output_dir):
+                for file in files:
+                    if file.lower().endswith(('.mp4', '.avi', '.mov')):
+                        video_paths.append(os.path.join(root, file))
+            
             workflow_logger.info(f"Video slicing completed successfully. Output directory: {video_output_dir}")
             
             return {
                 "success": True,
-                "output_directory": video_output_dir,
-                "scene_count": len(new_scene_list)
+                "video_paths": video_paths
             }
             
         except Exception as e:
