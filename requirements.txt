@@ -1,2 +1,2 @@
 scenedetect
-opencv-python:
+opencv-python
