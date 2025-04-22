@@ -5,23 +5,90 @@ def register_node(cls):
     """Development environment stub decorator"""
     return cls
 
-class Node(ABC):
-    """Base node class for development environment"""
-    NAME: str = ""
-    DESCRIPTION: str = ""
-    CATEGORY: str = "Uncategorized"
-    INPUTS: Dict[str, Dict[str, Any]] = {}
-    OUTPUTS: Dict[str, Dict[str, Any]] = {}
+class Node:
+    """节点基类"""
+    NAME = "节点1"
+    DESCRIPTION = ""
+    CATEGORY = ""
+    INPUTS = {}
+    OUTPUTS = {}
+
+
+    # async def run_agent_async(self, agent_id: str, input_text: str) -> str:
+    #     """异步运行Agent"""
+    #     agent_executor = AgentExecutor(AgentManager())
+    #     result = await agent_executor.run_once(agent_id=agent_id, text=input_text)
+    #     return result.get("result", "") if result else ""
+    
+    
+
+    async def run_agent(self, agent_id: str, input_text: str) -> str:
+        """
+        运行Agent - 使用工作流管理器执行
+        
+        Args:
+            agent_id: Agent ID
+            input_text: 输入文本
+            
+        Returns:
+            str: Agent执行结果
+        """
+        pass
+
     
     @abstractmethod
     async def execute(self, node_inputs: Dict[str, Any], workflow_logger) -> Dict[str, Any]:
-        raise NotImplementedError
+        raise NotImplementedError("子类必须execute方法")
     
+    async def stop(self) -> None:
+        """
+        Stop the node execution when interrupted.
+        This is an optional method that nodes can implement to handle interruption.
+        The default implementation does nothing.
+        """
+        pass
 
     @property
     def is_generator(self) -> bool:
-        """Whether this is a generator node"""
+        """是否是生成器节点"""
         return False
+    
+    def format_input(self, raw_input: Any, config: Dict[str, Any]) -> Dict[str, Any]:
+        """格式化输入参数
+        
+        Args:
+            raw_input: 原始输入
+            config: 工具配置
+            
+        Returns:
+            格式化后的输入参数
+        """
+        formatted_input = {}
+        
+        # 1. 首先添加配置参数
+        formatted_input.update(config)
+        
+        # 2. 处理原始输入
+        if isinstance(raw_input, str):
+            # 查找第一个必需的字符串类型参数
+            for param_name, param_info in self.INPUTS.items():
+                if (param_info.get('required', False) and 
+                    param_info.get('type', '').upper() == 'STRING'):
+                    formatted_input[param_name] = raw_input
+                    break
+        elif isinstance(raw_input, dict):
+            formatted_input.update(raw_input)
+            
+        # 3. 检查必需参数
+        missing_params = []
+        for param_name, param_info in self.INPUTS.items():
+            if param_info.get('required', False) and param_name not in formatted_input:
+                missing_params.append(param_name)
+            
+        if missing_params:
+            raise ValueError(f"Missing required parameters: {', '.join(missing_params)}")
+            
+        return formatted_input
 
 class GeneratorNode(Node):
     """Generator node base class for development environment"""
