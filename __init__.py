@@ -1,6 +1,7 @@
 from .cutVideo import *
 from .randomConcat import *
 from .muteVideo import *
+from .subtitle import *
 
 VERSION = "0.0.2"
 GIT_URL = "https://github.com/yang0/autotask_video.git"
