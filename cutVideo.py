@@ -3,11 +3,13 @@ try:
 except ImportError:
     from stub import Node, register_node
 
+
 from typing import Dict, Any
 import os
-import shutil
 from scenedetect import open_video, SceneManager, split_video_ffmpeg
 from scenedetect.detectors import ContentDetector, ThresholdDetector
+import subprocess
+
 
 
 @register_node
@@ -67,6 +69,33 @@ class VideoSlicingNode(Node):
             "type": "List"
         }
     }
+    
+    def __init__(self):
+        super().__init__()
+        self._stop_flag = False
+        self._current_process = None
+    
+    async def stop(self) -> None:
+        self._stop_flag = True
+        if self._current_process is not None:
+            try:
+                self._current_process.terminate()
+                self._current_process = None
+            except:
+                pass
+
+    def _custom_invoke_command(self, call_list):
+        """Custom command invoker that tracks the process"""
+        try:
+            self._current_process = subprocess.Popen(
+                call_list,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
+            stdout, stderr = self._current_process.communicate()
+            return self._current_process.returncode
+        finally:
+            self._current_process = None
 
     async def execute(self, node_inputs: Dict[str, Any], workflow_logger) -> Dict[str, Any]:
         try:
@@ -79,6 +108,9 @@ class VideoSlicingNode(Node):
             frame_skip = node_inputs.get("frame_skip", 12)
             
             workflow_logger.info(f"Starting video slicing for: {video_path}")
+            
+            # Reset stop flag
+            self._stop_flag = False
             
             # Open video and create scene manager
             video = open_video(video_path)
@@ -124,15 +156,42 @@ class VideoSlicingNode(Node):
             
             # Split the video into scenes
             workflow_logger.info("Splitting video into scenes...")
-            split_video_ffmpeg(
-                input_video_path=video_path, 
-                scene_list=new_scene_list, 
-                output_dir=video_output_dir, 
-                show_progress=True
-            )
             
-            # Move scenes to subdirectories
-            self._move_scenes_to_subdirectories(video_output_dir)
+            # Custom formatter to check stop flag during ffmpeg split
+            def custom_formatter(video, scene):
+                if self._stop_flag:
+                    raise InterruptedError("Operation interrupted by user")
+                return f"{video.name}-Scene-{scene.index + 1:03d}.mp4"
+            
+            try:
+                # Monkey patch the invoke_command function to use our custom one
+                from scenedetect.platform import invoke_command as original_invoke
+                from scenedetect.platform import invoke_command
+                invoke_command = self._custom_invoke_command
+                
+                split_video_ffmpeg(
+                    input_video_path=video_path, 
+                    scene_list=new_scene_list, 
+                    output_dir=video_output_dir, 
+                    show_progress=True,
+                    formatter=custom_formatter
+                )
+                
+                # Restore original invoke_command
+                invoke_command = original_invoke
+                
+            except InterruptedError as e:
+                workflow_logger.info(str(e))
+                return {
+                    "success": False,
+                    "error_message": str(e)
+                }
+            
+            if self._stop_flag:
+                return {
+                    "success": False,
+                    "error_message": "Operation interrupted by user"
+                }
             
             # Get all video file paths
             video_paths = []
