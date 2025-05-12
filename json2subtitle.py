@@ -156,6 +156,14 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     if seg_words:
                         s['begin_time'] = seg_words[0].get('begin_time', sentence['begin_time'])
                         s['end_time'] = seg_words[-1].get('end_time', sentence['end_time'])
+                else:
+                    # For Chinese text, calculate proportional timestamps
+                    total_chars = len(text)
+                    start_ratio = buf_start / total_chars
+                    end_ratio = buf_end / total_chars
+                    duration = sentence['end_time'] - sentence['begin_time']
+                    s['begin_time'] = sentence['begin_time'] + int(duration * start_ratio)
+                    s['end_time'] = sentence['begin_time'] + int(duration * end_ratio)
                 result.append(s)
                 # 新起一条
                 buf = seg
@@ -181,6 +189,14 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 if seg_words:
                     s['begin_time'] = seg_words[0].get('begin_time', sentence['begin_time'])
                     s['end_time'] = seg_words[-1].get('end_time', sentence['end_time'])
+            else:
+                # For Chinese text, calculate proportional timestamps
+                total_chars = len(text)
+                start_ratio = buf_start / total_chars
+                end_ratio = buf_end / total_chars
+                duration = sentence['end_time'] - sentence['begin_time']
+                s['begin_time'] = sentence['begin_time'] + int(duration * start_ratio)
+                s['end_time'] = sentence['begin_time'] + int(duration * end_ratio)
             result.append(s)
         return result
 
