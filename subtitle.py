@@ -17,9 +17,9 @@ class SubtitleFormat:
 
 
 @register_node
-class SubtitleTextExtractor(GeneratorNode):
-    NAME = "Subtitle Text Extractor"
-    DESCRIPTION = "Extract text content from subtitle files with timestamps (supports .srt, .ass, .ssa, .vtt) and output in configurable timestamp blocks"
+class SubtitleSplitter(GeneratorNode):
+    NAME = "Subtitle Splitter"
+    DESCRIPTION = "Split subtitle files into timestamp blocks (supports .srt, .ass, .ssa, .vtt) and output them in configurable batches"
 
     INPUTS = {
         "subtitle_file": {

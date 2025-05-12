@@ -6,6 +6,7 @@ from .add_subtitle import *
 from .ali_audio import *
 from .make_wav import *
 from .json2subtitle import *
+from .subtitle2speech import *
 
 VERSION = "0.0.4"
 GIT_URL = "https://github.com/yang0/autotask_video.git"

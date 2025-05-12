@@ -73,7 +73,7 @@ def get_audio_duration(input_file: str) -> float:
 def split_audio_by_silence(input_file: str, output_dir: str, min_segment: int = 30, max_segment: int = 300, silence_threshold: str = '-30dB', min_silence_duration: float = 0.5) -> list:
     """
     Split audio at silence points using ffmpeg's silencedetect.
-    Returns a list of output segment file paths.
+    Returns a list of tuples containing (output_file_path, start_time, duration).
     """
     os.makedirs(output_dir, exist_ok=True)
     audio_duration = get_audio_duration(input_file)
@@ -82,13 +82,14 @@ def split_audio_by_silence(input_file: str, output_dir: str, min_segment: int = 
     base_name = os.path.splitext(os.path.basename(input_file))[0]
     output_files = []
     for idx, (start, end) in enumerate(segments):
-        output_path = os.path.join(output_dir, f"{base_name}_segment_{idx+1:03d}.wav")
+        duration = end - start
+        output_path = os.path.join(output_dir, f"{base_name}_segment_{idx+1:03d}_{start:.2f}_{duration:.2f}.wav")
         cmd = [
             'ffmpeg', '-y', '-i', input_file, '-ss', str(start), '-to', str(end),
             '-c', 'copy', output_path
         ]
         subprocess.run(cmd, check=True)
-        output_files.append(output_path)
+        output_files.append((output_path, start, duration))
     return output_files
 
 def merge_adjacent_sentences(sentences, time_threshold=1000, text_overlap=5):
@@ -235,9 +236,13 @@ class AudioRecognitionNode(Node):
             all_results = []
             semaphore = asyncio.Semaphore(concurrency)
 
-            async def process_segment(segment_file: str, index: int):
+            async def process_segment(segment_info: tuple, index: int):
+                segment_file, start_time, duration = segment_info
                 async with semaphore:
                     workflow_logger.info(f"Processing segment {index+1}/{len(split_files)}: {segment_file}")
+                    
+                    # Use the actual start time from the segment info
+                    segment_start = start_time
                     
                     # Call Alibaba Cloud speech recognition API
                     recognition = Recognition(
@@ -257,26 +262,23 @@ class AudioRecognitionNode(Node):
                         workflow_logger.warning(f"No sentences in segment {index+1}")
                         return None
                     
-                    # Adjust timestamps based on segment position
-                    segment_offset = index * segment_duration * 1000  # Convert to milliseconds
+                    # Adjust timestamps based on actual segment start time
                     for sentence in sentence_list:
                         if 'begin_time' in sentence:
-                            sentence['begin_time'] += segment_offset
+                            sentence['begin_time'] += segment_start * 1000  # Convert to milliseconds
                         if 'end_time' in sentence:
-                            sentence['end_time'] += segment_offset
+                            sentence['end_time'] += segment_start * 1000  # Convert to milliseconds
                         
                         # Adjust timestamps for words in the sentence
                         if 'words' in sentence:
                             for word in sentence['words']:
                                 if 'begin_time' in word:
-                                    word['begin_time'] += segment_offset
+                                    word['begin_time'] += segment_start * 1000
                                 if 'end_time' in word:
-                                    word['end_time'] += segment_offset
+                                    word['end_time'] += segment_start * 1000
                     
                     # Save intermediate result for this segment
-                    segment_filename = os.path.basename(segment_file)
-                    segment_name = os.path.splitext(segment_filename)[0]
-                    intermediate_json = os.path.join(output_dir, f"{segment_name}_recognition.json")
+                    intermediate_json = os.path.join(output_dir, f"{os.path.splitext(os.path.basename(segment_file))[0]}_recognition.json")
                     with open(intermediate_json, 'w', encoding='utf-8') as f:
                         json.dump(sentence_list, f, ensure_ascii=False, indent=2)
                     workflow_logger.info(f"Saved intermediate result for segment {index+1} to: {intermediate_json}")
@@ -284,7 +286,7 @@ class AudioRecognitionNode(Node):
                     return sentence_list
 
             # Create tasks for all segments
-            tasks = [process_segment(segment_file, i) for i, segment_file in enumerate(split_files)]
+            tasks = [process_segment(segment_info, i) for i, segment_info in enumerate(split_files)]
             
             # Wait for all tasks to complete
             results = await asyncio.gather(*tasks)
