@@ -108,13 +108,6 @@ class SubtitleToSpeech(Node):
             "type": "COMBO",
             "required": True,
             "options": list(VOICE_MAPPING.keys())
-        },
-        "use_local_files": {
-            "label": "Use Local Files",
-            "description": "Use existing intermediate audio files if available",
-            "type": "BOOLEAN",
-            "required": False,
-            "default": False
         }
     }
 
@@ -470,51 +463,7 @@ class SubtitleToSpeech(Node):
         if abs(total_duration - expected_duration) > 0.1:
             logger.warning(f"Duration mismatch! Difference: {abs(total_duration - expected_duration):.2f}s")
 
-    def _collect_debug_audio(self, audio_files: List[str], output_dir: str, subtitles: List[Dict[str, str]]) -> None:
-        """Collect and save intermediate audio files for debugging purposes"""
-        debug_dir = os.path.join(output_dir, 'debug_audio')
-        os.makedirs(debug_dir, exist_ok=True)
-        
-        # Save audio files with detailed information
-        for i, file in enumerate(audio_files):
-            # Get file duration
-            cmd = [
-                'ffprobe',
-                '-v', 'error',
-                '-show_entries', 'format=duration',
-                '-of', 'default=noprint_wrappers=1:nokey=1',
-                file
-            ]
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            duration = float(result.stdout.strip())
-            
-            # Copy file to debug directory with detailed name
-            base_name = os.path.basename(file)
-            new_name = f"{i:03d}_{base_name}"
-            new_path = os.path.join(debug_dir, new_name)
-            
-            # Copy the file
-            cmd = [
-                'ffmpeg', '-y',
-                '-i', file,
-                '-c:a', 'pcm_s16le',
-                new_path
-            ]
-            subprocess.run(cmd, check=True, capture_output=True)
-            
-            # Create a text file with information about this audio segment
-            info_file = os.path.join(debug_dir, f"{i:03d}_info.txt")
-            with open(info_file, 'w', encoding='utf-8') as f:
-                f.write(f"Original file: {base_name}\n")
-                f.write(f"Duration: {duration:.2f}s\n")
-                if 'temp_' in base_name:
-                    idx = int(base_name.split('_')[1].split('.')[0])
-                    if idx < len(subtitles):
-                        f.write(f"Subtitle text: {subtitles[idx]['text']}\n")
-                        f.write(f"Subtitle timing: {subtitles[idx]['start']} --> {subtitles[idx]['end']}\n")
-        
-        print(f"\nDebug audio files have been saved to: {debug_dir}")
-        print("Each audio file has a corresponding info.txt file with details")
+    
 
     def _find_local_audio_files(self, output_dir: str) -> List[str]:
         """Find existing intermediate audio files in the output directory"""
@@ -630,7 +579,6 @@ class SubtitleToSpeech(Node):
             subtitle_path = node_inputs["subtitle_file"]
             output_dir = node_inputs["output_dir"]
             voice_name = node_inputs["voice_code"]
-            use_local_files = node_inputs.get("use_local_files", False)
             voice_code = VOICE_MAPPING[voice_name]
 
             workflow_logger.info(f"Processing subtitle file: {subtitle_path}")
@@ -641,33 +589,6 @@ class SubtitleToSpeech(Node):
 
             # Create output directory if it doesn't exist
             os.makedirs(output_dir, exist_ok=True)
-
-            # Check if we should use local files
-            if use_local_files:
-                local_files = self._find_local_audio_files(output_dir)
-                if local_files:
-                    workflow_logger.info(f"Found {len(local_files)} local audio files")
-                    # Collect debug audio files for verification
-                    self._collect_debug_audio(local_files, output_dir, subtitles)
-                    
-                    # Concatenate all audio files
-                    output_file = os.path.join(output_dir, 'final_audio.wav')
-                    self._concatenate_audio_files(local_files, output_file)
-                    
-                    # Check final audio duration
-                    workflow_logger.info("\nChecking final audio duration:")
-                    final_duration = self._check_audio_duration(output_file, workflow_logger)
-                    expected_duration = self._time_to_seconds(subtitles[-1]['end'])
-                    if abs(final_duration - expected_duration) > 0.1:
-                        workflow_logger.warning(f"Final duration mismatch! Difference: {abs(final_duration - expected_duration):.2f}s")
-                    
-                    workflow_logger.info(f"Successfully generated audio file using local files: {output_file}")
-                    return {
-                        "success": True,
-                        "output_file": output_file
-                    }
-                else:
-                    workflow_logger.info("No local audio files found, proceeding with normal processing")
 
             audio_files = []
             current_time = 0.0
@@ -768,9 +689,6 @@ class SubtitleToSpeech(Node):
                     workflow_logger.info(f"Added final silence: {final_silence:.2f}s")
                     self._check_audio_duration(silence_file, workflow_logger, final_silence)
 
-            # Collect debug audio files
-            self._collect_debug_audio(audio_files, output_dir, subtitles)
-
             # Check all audio segments before concatenation
             workflow_logger.info("\nChecking all audio segments before concatenation:")
             self._check_audio_segments(audio_files, subtitles, workflow_logger)
@@ -788,8 +706,7 @@ class SubtitleToSpeech(Node):
 
             # Clean up intermediate files
             for file in audio_files:
-                pass
-                # os.remove(file)
+                os.remove(file)
 
             workflow_logger.info(f"Successfully generated audio file: {output_file}")
             return {
