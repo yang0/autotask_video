@@ -7,6 +7,8 @@ import os
 import json
 from datetime import datetime, timedelta
 import re
+import wave
+import soundfile as sf
 
 
 @register_node
@@ -43,6 +45,13 @@ class Json2SubtitleNode(Node):
             "type": "INT",
             "required": False,
             "default": 100
+        },
+        "audio_files": {
+            "label": "Audio Files",
+            "description": "List of audio files associated with the subtitle",
+            "type": "LIST",
+            "required": False,
+            "widget": "FILE"
         }
     }
 
@@ -200,11 +209,49 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             result.append(s)
         return result
 
+    def _print_durations(self, sentences: List[Dict], audio_files: List[str]) -> None:
+        """Print subtitle and audio durations line by line"""
+        print("\nDuration Analysis:")
+        print("序号\t字幕时长(秒)\t音频时长(秒)")
+        print("-" * 40)
+        
+        # Calculate subtitle durations
+        total_subtitle_duration = 0
+        for i, sentence in enumerate(sentences, 1):
+            duration = (sentence['end_time'] - sentence['begin_time']) / 1000  # Convert to seconds
+            total_subtitle_duration += duration
+            print(f"{i}\t{duration:.2f}\t\t-")
+        
+        # Calculate audio durations
+        total_audio_duration = 0
+        for audio_file in audio_files:
+            try:
+                if audio_file.endswith('.wav'):
+                    with wave.open(audio_file, 'rb') as wav_file:
+                        frames = wav_file.getnframes()
+                        rate = wav_file.getframerate()
+                        duration = frames / float(rate)  # Already in seconds
+                else:
+                    # For other audio formats (mp3, m4a)
+                    data, samplerate = sf.read(audio_file)
+                    duration = len(data) / samplerate  # Already in seconds
+                
+                total_audio_duration += duration
+                print(f"-\t-\t\t{duration:.2f}")
+            except Exception as e:
+                print(f"Error processing {audio_file}: {str(e)}")
+        
+        # Print totals
+        print("-" * 40)
+        print(f"总计\t{total_subtitle_duration:.2f}\t\t{total_audio_duration:.2f}")
+        print(f"差值\t{(total_subtitle_duration - total_audio_duration):.2f}")
+
     async def execute(self, node_inputs: Dict[str, Any], workflow_logger) -> Dict[str, Any]:
         try:
             json_file = node_inputs["json_file"]
             output_dir = node_inputs["output_dir"]
             format_type = node_inputs.get("format", "srt").lower()
+            audio_files = node_inputs.get("audio_files", [])  # Get audio files from input
 
             workflow_logger.info(f"Starting subtitle generation for: {json_file}")
 
@@ -220,6 +267,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             split_sentences = []
             for s in sentences:
                 split_sentences.extend(self.split_long_sentence(s, max_length=max_length))
+
+            # Print durations if audio files are provided
+            if audio_files:
+                self._print_durations(split_sentences, audio_files)
 
             # Prepare output filename
             input_filename = os.path.basename(json_file)

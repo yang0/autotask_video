@@ -388,16 +388,87 @@ class SubtitleToSpeech(Node):
         """Check and log the duration of all audio segments"""
         total_duration = 0
         logger.info("\nChecking duration of all audio segments:")
-        for audio_file in audio_files:
-            duration = self._check_audio_duration(audio_file, logger)
-            total_duration += duration
+        print("\n序号\t字幕时长(秒)\t音频时长(秒)")
+        print("-" * 40)
         
-        logger.info(f"\nTotal duration of all segments: {total_duration:.2f}s")
-        if subtitles:
-            expected_duration = self._time_to_seconds(subtitles[-1]['end'])
-            logger.info(f"Expected duration from subtitles: {expected_duration:.2f}s")
-            if abs(total_duration - expected_duration) > 0.1:
-                logger.warning(f"Duration mismatch! Difference: {abs(total_duration - expected_duration):.2f}s")
+        # Group audio files by subtitle index
+        audio_groups = {}
+        for audio_file in audio_files:
+            base_name = os.path.basename(audio_file)
+            if base_name.startswith('temp_') or base_name.startswith('adjusted_'):
+                idx = int(base_name.split('_')[1].split('.')[0])
+                if idx not in audio_groups:
+                    audio_groups[idx] = []
+                audio_groups[idx].append(audio_file)
+            elif base_name.startswith('silence_start_'):
+                idx = int(base_name.split('_')[2].split('.')[0])
+                if idx not in audio_groups:
+                    audio_groups[idx] = []
+                audio_groups[idx].append(audio_file)
+            elif base_name.startswith('silence_end_'):
+                idx = int(base_name.split('_')[2].split('.')[0])
+                if idx not in audio_groups:
+                    audio_groups[idx] = []
+                audio_groups[idx].append(audio_file)
+            elif base_name.startswith('silence_final'):
+                if -1 not in audio_groups:
+                    audio_groups[-1] = []
+                audio_groups[-1].append(audio_file)
+        
+        # Print subtitle and audio durations line by line
+        for i, sub in enumerate(subtitles):
+            sub_duration = self._time_to_seconds(sub['end']) - self._time_to_seconds(sub['start'])
+            audio_duration = 0
+            
+            # Calculate total duration for this subtitle's audio files
+            if i in audio_groups:
+                for audio_file in audio_groups[i]:
+                    try:
+                        cmd = [
+                            'ffprobe',
+                            '-v', 'error',
+                            '-show_entries', 'format=duration',
+                            '-of', 'default=noprint_wrappers=1:nokey=1',
+                            audio_file
+                        ]
+                        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+                        duration = float(result.stdout.strip())
+                        audio_duration += duration
+                    except Exception as e:
+                        logger.error(f"Error processing {audio_file}: {str(e)}")
+            
+            print(f"{i+1}\t{sub_duration:.2f}\t\t{audio_duration:.2f}")
+            total_duration += audio_duration
+        
+        # Add final silence duration if exists
+        if -1 in audio_groups:
+            final_silence_duration = 0
+            for audio_file in audio_groups[-1]:
+                try:
+                    cmd = [
+                        'ffprobe',
+                        '-v', 'error',
+                        '-show_entries', 'format=duration',
+                        '-of', 'default=noprint_wrappers=1:nokey=1',
+                        audio_file
+                    ]
+                    result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+                    duration = float(result.stdout.strip())
+                    final_silence_duration += duration
+                except Exception as e:
+                    logger.error(f"Error processing final silence {audio_file}: {str(e)}")
+            if final_silence_duration > 0:
+                print(f"Final silence: {final_silence_duration:.2f}")
+                total_duration += final_silence_duration
+        
+        # Print totals
+        print("-" * 40)
+        expected_duration = self._time_to_seconds(subtitles[-1]['end'])
+        print(f"总计\t{expected_duration:.2f}\t\t{total_duration:.2f}")
+        print(f"差值\t{(expected_duration - total_duration):.2f}")
+        
+        if abs(total_duration - expected_duration) > 0.1:
+            logger.warning(f"Duration mismatch! Difference: {abs(total_duration - expected_duration):.2f}s")
 
     def _collect_debug_audio(self, audio_files: List[str], output_dir: str, subtitles: List[Dict[str, str]]) -> None:
         """Collect and save intermediate audio files for debugging purposes"""
@@ -608,6 +679,20 @@ class SubtitleToSpeech(Node):
                 target_duration = end_time - start_time
                 workflow_logger.info(f"Processing subtitle block {i+1}/{len(subtitles)} | Duration: {target_duration:.2f}s ({sub['start']} --> {sub['end']})")
 
+                # Add silence between subtitle blocks if needed
+                if current_time < start_time:
+                    gap_duration = start_time - current_time
+                    if gap_duration > 0.01:  # Only add silence if gap is significant
+                        gap_silence_file = os.path.join(output_dir, f'gap_silence_{i}.wav')
+                        self._generate_silence(gap_duration, gap_silence_file)
+                        gap_silence_file_fixed = os.path.join(output_dir, f'gap_silence_{i}_fixed.wav')
+                        self._ensure_wav_pcm(gap_silence_file, gap_silence_file_fixed)
+                        os.replace(gap_silence_file_fixed, gap_silence_file)
+                        audio_files.append(gap_silence_file)
+                        workflow_logger.info(f"Added gap silence between blocks: {gap_duration:.2f}s")
+                        self._check_audio_duration(gap_silence_file, workflow_logger, gap_duration)
+                    current_time = start_time
+
                 # Generate TTS audio
                 temp_audio = os.path.join(output_dir, f'temp_{i}.wav')
                 await self._synthesize_text(sub['text'], temp_audio, voice_code)
@@ -616,35 +701,14 @@ class SubtitleToSpeech(Node):
                 self._ensure_wav_pcm(temp_audio, temp_audio_fixed)
                 os.replace(temp_audio_fixed, temp_audio)
                 workflow_logger.info(f"Generated TTS audio for block {i+1}")
-                # 获取TTS音频实际时长
+                
+                # Get TTS audio duration
                 tts_duration = self._check_audio_duration(temp_audio, workflow_logger, target_duration)
 
-                # 计算需要的静音时长
-                silence_duration = start_time - current_time
-                # 优先裁剪静音
-                if silence_duration + tts_duration > target_duration:
-                    silence_duration = max(0, target_duration - tts_duration)
-                    workflow_logger.info(f"[Adjust] Silence for block {i+1} trimmed to {silence_duration:.2f}s to fit target duration.")
-                # 如果静音>0，生成静音
-                if silence_duration > 0.1:
-                    silence_file = os.path.join(output_dir, f'silence_start_{i}.wav')
-                    self._generate_silence(silence_duration, silence_file)
-                    silence_file_fixed = os.path.join(output_dir, f'silence_start_{i}_fixed.wav')
-                    self._ensure_wav_pcm(silence_file, silence_file_fixed)
-                    os.replace(silence_file_fixed, silence_file)
-                    audio_files.append(silence_file)
-                    workflow_logger.info(f"Added start silence for block {i+1}")
-                    self._check_audio_duration(silence_file, workflow_logger, silence_duration)
-                current_time = start_time + silence_duration
-
-                # 再次获取TTS音频时长（防止静音裁剪后current_time变化）
-                tts_duration = self._check_audio_duration(temp_audio, workflow_logger, target_duration)
-                # 如果TTS音频比剩余目标时长还长，需要压缩TTS
-                tts_target = end_time - current_time
-                if tts_duration > tts_target + 0.01:
+                # Adjust TTS audio if needed
+                if tts_duration > target_duration + 0.01:
                     adjusted_audio = os.path.join(output_dir, f'adjusted_{i}.wav')
-                    # 修正 atempo 逻辑
-                    speed_factor = tts_duration / tts_target
+                    speed_factor = tts_duration / target_duration
                     filters = []
                     sf = speed_factor
                     while sf > 2.0:
@@ -668,25 +732,41 @@ class SubtitleToSpeech(Node):
                     os.replace(adjusted_audio_fixed, adjusted_audio)
                     audio_files.append(adjusted_audio)
                     workflow_logger.info(f"Adjusted audio speed for block {i+1}")
-                    self._check_audio_duration(adjusted_audio, workflow_logger, tts_target)
+                    self._check_audio_duration(adjusted_audio, workflow_logger, target_duration)
                     current_time = end_time
                 else:
                     audio_files.append(temp_audio)
-                    current_time = current_time + tts_duration
+                    current_time = start_time + tts_duration
 
-                # Add silence at the end if needed
-                if current_time < end_time:
-                    silence_duration = end_time - current_time
-                    if silence_duration > 0.1:
-                        silence_file = os.path.join(output_dir, f'silence_end_{i}.wav')
-                        self._generate_silence(silence_duration, silence_file)
-                        silence_file_fixed = os.path.join(output_dir, f'silence_end_{i}_fixed.wav')
-                        self._ensure_wav_pcm(silence_file, silence_file_fixed)
-                        os.replace(silence_file_fixed, silence_file)
-                        audio_files.append(silence_file)
-                        workflow_logger.info(f"Added end silence for block {i+1}")
-                        self._check_audio_duration(silence_file, workflow_logger, silence_duration)
-                    current_time = end_time
+                    # Add silence at the end of the block if needed
+                    if current_time < end_time:
+                        silence_duration = end_time - current_time
+                        if silence_duration > 0.01:  # Only add silence if duration is significant
+                            silence_file = os.path.join(output_dir, f'silence_end_{i}.wav')
+                            self._generate_silence(silence_duration, silence_file)
+                            silence_file_fixed = os.path.join(output_dir, f'silence_end_{i}_fixed.wav')
+                            self._ensure_wav_pcm(silence_file, silence_file_fixed)
+                            os.replace(silence_file_fixed, silence_file)
+                            audio_files.append(silence_file)
+                            workflow_logger.info(f"Added end silence for block {i+1}: {silence_duration:.2f}s")
+                            self._check_audio_duration(silence_file, workflow_logger, silence_duration)
+                        current_time = end_time
+
+                # Log current progress
+                workflow_logger.info(f"Block {i+1}: Start={start_time:.2f}, End={end_time:.2f}, Current={current_time:.2f}")
+
+            # Add final silence if needed
+            if current_time < self._time_to_seconds(subtitles[-1]['end']):
+                final_silence = self._time_to_seconds(subtitles[-1]['end']) - current_time
+                if final_silence > 0.01:  # Only add silence if duration is significant
+                    silence_file = os.path.join(output_dir, 'silence_final.wav')
+                    self._generate_silence(final_silence, silence_file)
+                    silence_file_fixed = os.path.join(output_dir, 'silence_final_fixed.wav')
+                    self._ensure_wav_pcm(silence_file, silence_file_fixed)
+                    os.replace(silence_file_fixed, silence_file)
+                    audio_files.append(silence_file)
+                    workflow_logger.info(f"Added final silence: {final_silence:.2f}s")
+                    self._check_audio_duration(silence_file, workflow_logger, final_silence)
 
             # Collect debug audio files
             self._collect_debug_audio(audio_files, output_dir, subtitles)
