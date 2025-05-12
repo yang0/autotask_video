@@ -1,0 +1,1333 @@
+[
+  {
+    "sentence_id": 1,
+    "begin_time": 60,
+    "end_time": 60080,
+    "text": "The conclave, the bells ringing at Villanova, his alma mater, Catholic schochildren jumping with joy, learning the poke was not only American, but from their hometown. And that moment, the cardinal from Chicago suddenly put his head in his hands. The other major news this Friday night, another terrifying incident at Newark airport. Air traffic control radar going dark again. Air traffic controllers losing communications with passenger jets. What's going on to thank the us and China and what President Trump is now signaling about his 145% tariffs on China. Will heat reduce them and will they make a deal? The storms hitting just as the weekend starts. The floodwatch in the northeast. Heavy rain for Washington dc, Philadelphia and New York. Tonight, the Soviet aerospacecraft launched back in 1972, hurtling toward earth. What they're now saying about where it could go. And tonight, the remarkable images right here at the Vatican as we prepare for a prime time special tonight, the American pope. ",
+    "channel_id": 0,
+    "speaker_id": null,
+    "sentence_end": true,
+    "heartbeat": false,
+    "words": [
+      {
+        "begin_time": 60,
+        "end_time": 542,
+        "text": "The ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 542,
+        "end_time": 1024,
+        "text": "conclave",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 1024,
+        "end_time": 1457,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 1457,
+        "end_time": 1890,
+        "text": "bells ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 1890,
+        "end_time": 2323,
+        "text": "ringing ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 2323,
+        "end_time": 2756,
+        "text": "at ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 2756,
+        "end_time": 3189,
+        "text": "Villanova",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 3193,
+        "end_time": 3434,
+        "text": "his ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 3434,
+        "end_time": 3675,
+        "text": "alma ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 3675,
+        "end_time": 3916,
+        "text": "mater",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 3916,
+        "end_time": 4398,
+        "text": "Catholic ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 4398,
+        "end_time": 4880,
+        "text": "schochildren ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 4880,
+        "end_time": 5362,
+        "text": "jumping ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 5362,
+        "end_time": 5844,
+        "text": "with ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 5844,
+        "end_time": 6326,
+        "text": "joy",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 6327,
+        "end_time": 6636,
+        "text": "learning ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 6636,
+        "end_time": 6945,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 6945,
+        "end_time": 7254,
+        "text": "poke ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 7254,
+        "end_time": 7563,
+        "text": "was ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 7563,
+        "end_time": 7872,
+        "text": "not ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 7872,
+        "end_time": 8181,
+        "text": "only ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 8181,
+        "end_time": 8490,
+        "text": "American",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 8496,
+        "end_time": 8797,
+        "text": "but ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 8797,
+        "end_time": 9098,
+        "text": "from ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 9098,
+        "end_time": 9399,
+        "text": "their ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 9399,
+        "end_time": 9700,
+        "text": "hometown",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 9701,
+        "end_time": 10022,
+        "text": "And ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 10022,
+        "end_time": 10343,
+        "text": "that ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 10343,
+        "end_time": 10664,
+        "text": "moment",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 10665,
+        "end_time": 10971,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 10971,
+        "end_time": 11277,
+        "text": "cardinal ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 11277,
+        "end_time": 11583,
+        "text": "from ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 11583,
+        "end_time": 11889,
+        "text": "Chicago ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 11889,
+        "end_time": 12195,
+        "text": "suddenly ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 12195,
+        "end_time": 12501,
+        "text": "put ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 12501,
+        "end_time": 12807,
+        "text": "his ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 12807,
+        "end_time": 13113,
+        "text": "head ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 13113,
+        "end_time": 13419,
+        "text": "in ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 13419,
+        "end_time": 13725,
+        "text": "his ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 13725,
+        "end_time": 14031,
+        "text": "hands",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 14040,
+        "end_time": 14315,
+        "text": "The ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 14315,
+        "end_time": 14590,
+        "text": "other ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 14590,
+        "end_time": 14865,
+        "text": "major ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 14865,
+        "end_time": 15140,
+        "text": "news ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 15140,
+        "end_time": 15415,
+        "text": "this ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 15415,
+        "end_time": 15690,
+        "text": "Friday ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 15690,
+        "end_time": 15965,
+        "text": "night",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 15968,
+        "end_time": 16450,
+        "text": "another ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 16450,
+        "end_time": 16932,
+        "text": "terrifying ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 16932,
+        "end_time": 17414,
+        "text": "incident ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 17414,
+        "end_time": 17896,
+        "text": "at ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 17896,
+        "end_time": 18378,
+        "text": "Newark ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 18378,
+        "end_time": 18860,
+        "text": "airport",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 18861,
+        "end_time": 19170,
+        "text": "Air ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 19170,
+        "end_time": 19479,
+        "text": "traffic ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 19479,
+        "end_time": 19788,
+        "text": "control ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 19788,
+        "end_time": 20097,
+        "text": "radar ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 20097,
+        "end_time": 20406,
+        "text": "going ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 20406,
+        "end_time": 20715,
+        "text": "dark ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 20715,
+        "end_time": 21024,
+        "text": "again",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 21030,
+        "end_time": 21542,
+        "text": "Air ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 21542,
+        "end_time": 22054,
+        "text": "traffic ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 22054,
+        "end_time": 22566,
+        "text": "controllers ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 22566,
+        "end_time": 23078,
+        "text": "losing ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 23078,
+        "end_time": 23590,
+        "text": "communications ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 23590,
+        "end_time": 24102,
+        "text": "with ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 24102,
+        "end_time": 24614,
+        "text": "passenger ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 24614,
+        "end_time": 25126,
+        "text": "jets",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 25128,
+        "end_time": 25500,
+        "text": "What's ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 25500,
+        "end_time": 25872,
+        "text": "going ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 25872,
+        "end_time": 26244,
+        "text": "on ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 26244,
+        "end_time": 26616,
+        "text": "to ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 26616,
+        "end_time": 26988,
+        "text": "thank ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 26988,
+        "end_time": 27360,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 27360,
+        "end_time": 27732,
+        "text": "us ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 27732,
+        "end_time": 28104,
+        "text": "and ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 28104,
+        "end_time": 28476,
+        "text": "China ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 28476,
+        "end_time": 28848,
+        "text": "and ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 28848,
+        "end_time": 29220,
+        "text": "what ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 29220,
+        "end_time": 29592,
+        "text": "President ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 29592,
+        "end_time": 29964,
+        "text": "Trump ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 29964,
+        "end_time": 30336,
+        "text": "is ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 30336,
+        "end_time": 30708,
+        "text": "now ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 30708,
+        "end_time": 31080,
+        "text": "signaling ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 31080,
+        "end_time": 31452,
+        "text": "about ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 31452,
+        "end_time": 31824,
+        "text": "his ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 31824,
+        "end_time": 32196,
+        "text": "145% ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 32196,
+        "end_time": 32568,
+        "text": "tariffs ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 32568,
+        "end_time": 32940,
+        "text": "on ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 32940,
+        "end_time": 33312,
+        "text": "China",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 33324,
+        "end_time": 33589,
+        "text": "Will ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 33589,
+        "end_time": 33854,
+        "text": "heat ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 33854,
+        "end_time": 34119,
+        "text": "reduce ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 34119,
+        "end_time": 34384,
+        "text": "them ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 34384,
+        "end_time": 34649,
+        "text": "and ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 34649,
+        "end_time": 34914,
+        "text": "will ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 34914,
+        "end_time": 35179,
+        "text": "they ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 35179,
+        "end_time": 35444,
+        "text": "make ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 35444,
+        "end_time": 35709,
+        "text": "a ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 35709,
+        "end_time": 35974,
+        "text": "deal",
+        "punctuation": "? ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 35975,
+        "end_time": 36336,
+        "text": "The ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 36336,
+        "end_time": 36697,
+        "text": "storms ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 36697,
+        "end_time": 37058,
+        "text": "hitting ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 37058,
+        "end_time": 37419,
+        "text": "just ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 37419,
+        "end_time": 37780,
+        "text": "as ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 37780,
+        "end_time": 38141,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 38141,
+        "end_time": 38502,
+        "text": "weekend ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 38502,
+        "end_time": 38863,
+        "text": "starts",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 38868,
+        "end_time": 39301,
+        "text": "The ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 39301,
+        "end_time": 39734,
+        "text": "floodwatch ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 39734,
+        "end_time": 40167,
+        "text": "in ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 40167,
+        "end_time": 40600,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 40600,
+        "end_time": 41033,
+        "text": "northeast",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 41037,
+        "end_time": 41374,
+        "text": "Heavy ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 41374,
+        "end_time": 41711,
+        "text": "rain ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 41711,
+        "end_time": 42048,
+        "text": "for ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 42048,
+        "end_time": 42385,
+        "text": "Washington ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 42385,
+        "end_time": 42722,
+        "text": "dc",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 42724,
+        "end_time": 43146,
+        "text": "Philadelphia ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 43146,
+        "end_time": 43568,
+        "text": "and ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 43568,
+        "end_time": 43990,
+        "text": "New ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 43990,
+        "end_time": 44412,
+        "text": "York",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 44412,
+        "end_time": 44894,
+        "text": "Tonight",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 44894,
+        "end_time": 45444,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 45444,
+        "end_time": 45994,
+        "text": "Soviet ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 45994,
+        "end_time": 46544,
+        "text": "aerospacecraft ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 46544,
+        "end_time": 47094,
+        "text": "launched ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 47094,
+        "end_time": 47644,
+        "text": "back ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 47644,
+        "end_time": 48194,
+        "text": "in ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 48194,
+        "end_time": 48744,
+        "text": "1972",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 48750,
+        "end_time": 49152,
+        "text": "hurtling ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 49152,
+        "end_time": 49554,
+        "text": "toward ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 49554,
+        "end_time": 49956,
+        "text": "earth",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 49956,
+        "end_time": 50250,
+        "text": "What ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 50250,
+        "end_time": 50544,
+        "text": "they're ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 50544,
+        "end_time": 50838,
+        "text": "now ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 50838,
+        "end_time": 51132,
+        "text": "saying ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 51132,
+        "end_time": 51426,
+        "text": "about ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 51426,
+        "end_time": 51720,
+        "text": "where ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 51720,
+        "end_time": 52014,
+        "text": "it ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 52014,
+        "end_time": 52308,
+        "text": "could ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 52308,
+        "end_time": 52602,
+        "text": "go",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 52607,
+        "end_time": 52968,
+        "text": "And ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 52968,
+        "end_time": 53329,
+        "text": "tonight",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 53330,
+        "end_time": 53670,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 53670,
+        "end_time": 54010,
+        "text": "remarkable ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 54010,
+        "end_time": 54350,
+        "text": "images ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 54350,
+        "end_time": 54690,
+        "text": "right ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 54690,
+        "end_time": 55030,
+        "text": "here ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 55030,
+        "end_time": 55370,
+        "text": "at ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 55370,
+        "end_time": 55710,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 55710,
+        "end_time": 56050,
+        "text": "Vatican ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 56050,
+        "end_time": 56390,
+        "text": "as ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 56390,
+        "end_time": 56730,
+        "text": "we ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 56730,
+        "end_time": 57070,
+        "text": "prepare ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 57070,
+        "end_time": 57410,
+        "text": "for ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 57410,
+        "end_time": 57750,
+        "text": "a ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 57750,
+        "end_time": 58090,
+        "text": "prime ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 58090,
+        "end_time": 58430,
+        "text": "time ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 58430,
+        "end_time": 58770,
+        "text": "special ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 58770,
+        "end_time": 59110,
+        "text": "tonight",
+        "punctuation": ", ",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 59115,
+        "end_time": 59436,
+        "text": "the ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 59436,
+        "end_time": 59757,
+        "text": "American ",
+        "punctuation": "",
+        "fixed": false,
+        "speaker_id": null
+      },
+      {
+        "begin_time": 59757,
+        "end_time": 60080,
+        "text": "pope",
+        "punctuation": ". ",
+        "fixed": false,
+        "speaker_id": null
+      }
+    ],
+    "stash": {
+      "sentence_id": 2,
+      "text": "",
+      "begin_time": 60020,
+      "current_time": 60020,
+      "words": []
+    }
+  }
+]
