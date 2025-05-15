@@ -694,7 +694,9 @@ class SubtitleToSpeech(Node):
             self._check_audio_segments(audio_files, subtitles, workflow_logger)
 
             # Concatenate all audio files
-            output_file = os.path.join(output_dir, 'final_audio.wav')
+            subtitle_filename = os.path.splitext(os.path.basename(subtitle_path))[0]
+            current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_file = os.path.join(output_dir, f'{subtitle_filename}_{current_time}.wav')
             self._concatenate_audio_files(audio_files, output_file)
 
             # Check final audio duration

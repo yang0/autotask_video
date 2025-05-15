@@ -36,7 +36,7 @@ class VideoSlicingNode(Node):
             "label": "Detection Threshold",
             "description": "Threshold for scene detection (higher values = more sensitive)",
             "type": "INT",
-            "default": 10,
+            "default": 15,
             "required": False
         },
         "min_clip_frames": {
@@ -50,14 +50,14 @@ class VideoSlicingNode(Node):
             "label": "Skip End Frames",
             "description": "Number of frames to skip at the end of each scene",
             "type": "INT",
-            "default": 5,
+            "default": 2,
             "required": False
         },
         "frame_skip": {
             "label": "Frame Skip",
             "description": "Number of frames to skip during detection (higher values = faster but less accurate)",
             "type": "INT",
-            "default": 12,
+            "default": 2,
             "required": False
         }
     }
